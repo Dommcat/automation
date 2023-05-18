@@ -117,10 +117,6 @@ def validate_phone(input_phone_num):
             main = num_to_test
             extension = ''
 
-        # Format extension
-        extension = re.sub("[^0-9]", "", extension)
-    if len(extension) != 0:
-
 
 
 

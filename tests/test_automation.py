@@ -2,11 +2,30 @@ import pytest
 from automation.automation import validate_phone, validate_email, read_template, main
 
 def test_exists():
-    assert read_potential_contacts()
+    assert main()
 
 def test_read_potential_contacts():
     content = read_potential_contacts()
     assert isinstance(content, str)
+
+# @pytest.mark.skip("TODO")
+def test_email_happy():
+    actual = validate_email(['hansolo@starwars.com',])
+    expected = ['hansolo@starwars.com',]
+    assert actual == expected
+
+# @pytest.mark.skip("TODO")
+def test_email_bad_char_1():
+    actual = validate_email(['han(solo@starwars.com',])
+    expected = []
+    assert actual == expected
+
+# @pytest.mark.skip("TODO")
+def test_email_bad_char_2():
+    actual = validate_email(['han)solo@starwars.com',])
+    expected = []
+    assert actual == expected
+
 
 # @pytest.fixture(scope='module')
 def valid_contacts_input_file():
@@ -16,15 +35,15 @@ def valid_contacts_input_file():
 def invalid_contacts_input_file():
     return 'template_invalid.txt'
 
-@pytest.fixture(scope='module')
+# @pytest.fixture(scope='module')
 def duplicate_contacts_input_file():
     return 'template_duplicates.txt'
 
-@pytest.fixture(scope='module')
+# @pytest.fixture(scope='module')
 def missing_input_file():
     return 'missing_template.txt'
 
-@pytest.fixture(scope='module')
+# @pytest.fixture(scope='module')
 def expected_phone_file():
     return './automation/assets/phone-contacts.txt'
 
@@ -84,57 +103,3 @@ def test_missing_input_file(missing_input_file):
     # Run main function and expect FileNotFoundError
     with pytest.raises(FileNotFoundError):
         main(missing_input_file)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def test_exists():
-    assert potential_contacts()
-
-def test_potential_contacts():
-    content = potential_contacts()
-    assert isinstance(content, str)
-
-
-# def test_write_to_new_files():
-#     phone_numbers = ['206-555-1234', '206-555-5678', '206-555-9999']
-#     emails = ['jane.doe@gmail.com', 'john@example.com']
-#     write_to_new_files(phone_numbers, emails)
-#     with open("automation_directory/assets/phone_numbers.txt", "r") as file:
-#         assert file.read() == "206-555-1234\n206-555-5678\n206-555-9999\n"
-#     with open("automation_directory/assets/emails.txt", "r") as file:
-#         assert file.read() == "jane.doe@gmail.com\njohn@example.com\n"
