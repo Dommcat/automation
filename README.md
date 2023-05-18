@@ -33,10 +33,8 @@ pip install -r requirements.txt
 # Will install pytest by default
 
 run app with:
-python3 automation_directory/automation.py
+python3 automation/automation.py
 
-run pytest with:
-NA - Visual Verification
 ``` 
 
 ## Link to code:
