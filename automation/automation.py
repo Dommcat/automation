@@ -1,7 +1,6 @@
 import re
 
 def main(filename):
-    # Variables
     input_text = ''
     input_list = []
     potential_phone_numbers = []
@@ -9,35 +8,26 @@ def main(filename):
     good_phone_numbers = []
     good_emails = []
 
-    # Read txt file into template
     input_text = read_template(filename)
 
-    # Parse text into list of words separated by spaces
     input_list = input_text.split()
 
-    # Divide list into potential emails / phone numbers
     for word in input_list:
-        # If word has @, pop from input_list, push to potential emails
-        # Else: if word has at least 7 numbers, push to potential phone number list
         if '@' in word:
             potential_emails.append(word)
         else:
             if sum(char.isdigit() for char in word) > 6:
                 potential_phone_numbers.append(word)
 
-    # validate contacts
     good_emails = validate_email(potential_emails)
     good_phone_numbers = validate_phone(potential_phone_numbers)
 
-    # Remove duplicates
     good_emails = remove_duplicates(good_emails)
     good_phone_numbers = remove_duplicates(good_phone_numbers)
 
-    # Sort
     good_emails.sort()
     good_phone_numbers.sort()
 
-    # Add results to text file
     save_to_file(good_emails, './automation/assets/email-contacts.txt')
     save_to_file(good_phone_numbers, './automation/assets/phone-contacts.txt')
 
@@ -52,13 +42,13 @@ def read_template(filename):
 
 def validate_email(potential_emails):
     good_emails = []
-    bad_emails = []  # for testing purposes only
+    bad_emails = []  
 
     for address in potential_emails:
         valid_email = True
         bad_characters = '(),:"";<>[]"\"'
 
-        # 1 and only @ exists
+
         sum_of_at = 0
         for char in address:
             if char == '@':
@@ -67,23 +57,19 @@ def validate_email(potential_emails):
             valid_email = False
             bad_emails.append(address)
 
-        # entire length: 254 characters
         elif len(address) > 254:
             valid_email = False
             bad_emails.append(address)
 
-        # check for bad characters
         else:
             for char in address:
                 if char in bad_characters:
                     valid_email = False
                     bad_emails.append(address)
 
-        # Check local / domain parts of email
         if valid_email is True:
             local, domain = address.split("@")
 
-            # Check local part
             if len(local) > 64:
                 valid_email = False
                 bad_emails.append(address)
@@ -96,7 +82,6 @@ def validate_email(potential_emails):
                 valid_email = False
                 bad_emails.append(address)
 
-        # Passes all test - add to list
         if valid_email is True:
             good_emails.append(address)
 
@@ -104,13 +89,12 @@ def validate_email(potential_emails):
 
 def validate_phone(input_phone_num):
     good_phone_num = []
-    bad_phone_num = []  # for testing purposes only
+    bad_phone_num = [] 
 
     for phone_num in input_phone_num:
         num_to_test = phone_num
         valid_number = True
 
-        # split word by x into extension and main
         if 'x' in num_to_test:
             main, extension = num_to_test.split('x')
         else:
@@ -121,6 +105,5 @@ def validate_phone(input_phone_num):
 
 
 
-
-#     # Adapted Code from student Mike Shen
+#     # Adapted Code from Mike Shen & iterated using ChatGPT
 #     # https://github.com/mikeshen7/automation/blob/main/automation/automation.py
